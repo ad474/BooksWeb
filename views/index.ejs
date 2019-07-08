@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather|Oleo+Script|Poiret+One|Raleway&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="bg">
+      <div class="frontpage">
+          <h1>Your one stop for finding and exploring your favourite books</h1>
+          <br>
+          <br>
+          <h2>Create personalised lists and keep tabs on the progress on your books, while being on the prowl for the next read!</h2>
+          <br>
+          <br>
+        <div class="login2">
+          <h4>Scroll down to login</h4>
+          <h4>▼</h4>
+        </div>
+      </div>
+    </div>
+    <div class="loginblack">
+      <div class="loginorange">
+        <div class="login">
+          <h1 class="h1class">Login</h1>
+          <br>
+          <div class="loginform">
+            <div class="errorbox">
+              <p class="errorp"><%= filler%></p>
+            </div>
+            <form method="post" action="/">
+              <div class="form-group">
+                <input class="form-control" type="text" placeholder="Username" name="username">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+              </div>
+              <br>
+              <button type="submit" class="btn btn-outline-light">Submit</button>
+            </form>
+            <br>
+            <p>Don't have an account? <a href="register">Sign up here!</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
