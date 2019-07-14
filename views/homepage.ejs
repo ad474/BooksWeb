@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+
+  <h1>Hey <%= hname %>!</h1>
+  <%if(flag){%>
+    <p>You seem to have no books in your list yet</p>
+    <div class="cbutton">
+      <form class="" action="/add" method="post">
+        <button type="submit" class="btn btn-primary obutton">Add a book</button>
+      </form>
+    </div>
+  <%}%>
+
+<%- include('partials/footer') %>

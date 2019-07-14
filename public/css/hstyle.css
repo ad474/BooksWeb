@@ -1,0 +1,37 @@
+body{
+  background-color: #e8e8e8;
+}
+
+h1{
+  text-align: center;
+  margin-top: 60px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 4rem;
+}
+
+p{
+  text-align: center;
+  margin-top: 100px;
+  opacity: 0.3;
+  font-size: 2rem;
+}
+
+.cbutton{
+  text-align: center;
+}
+
+.obutton{
+  opacity: 0.7;
+}
+
+.form-control{
+  width: 30%;
+  margin-bottom: 40px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.topone{
+  margin-top: 40px;
+}
