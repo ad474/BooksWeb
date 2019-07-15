@@ -50,48 +50,6 @@ app.get("/register", function(req,res){
   res.render('register', {filler: ""});
 });
 
-app.post("/account", function(req,res){
-  Person.findOne({username:req.body.username}, function(err,person){
-    if(err){
-      console.log(err);
-    }
-    else{
-      if(person===null){
-        //wrong username
-        res.render('index', {filler: "This user does not exist. Try again."});
-      }
-      else{
-        if(person.password===req.body.password){
-          //when match
-          Book.find({username:req.body.username}, function(err,books){
-            if(err){
-              console.log(err);
-            }
-            else{
-              if(books.length===0){
-                //if no books added yet
-                res.render('homepage',{hname:person.name, flag:true});
-
-              }
-              else{
-                //if books added already
-                console.log(books);
-              }
-            }
-          });
-        }
-        else{
-          res.render('index', {filler: "This user does not exist. Try again. Password problem"});
-        }
-      }
-    }
-  });
-});
-
-app.get("/homepage", function(req,res){
-
-});
-
 app.post("/register",function(req,res){
   const person=new Person({
     username: req.body.username,
@@ -114,12 +72,73 @@ app.post("/register",function(req,res){
   });
 });
 
+app.post("/account", function(req,res){
+  Person.findOne({username:req.body.username}, function(err,person){
+    if(err){
+      console.log(err);
+    }
+    else{
+      if(person===null){
+        //wrong username
+        res.render('index', {filler: "This user does not exist. Try again."});
+      }
+      else{
+        if(person.password===req.body.password){
+          //when match
+          usname=req.body.username;
+          res.redirect("/homepage");
+        }
+        else{
+          res.render('index', {filler: "This user does not exist. Try again. Password problem"});
+        }
+      }
+    }
+  });
+});
+
+app.get("/homepage", function(req,res){
+  Person.findOne({username:usname}, function(err,person){
+    if(err){
+      console.log(err);
+    }
+    else{
+      Book.find({username:usname}, function(err,books){
+        if(err){
+          console.log(err);
+        }
+        else{
+          if(books.length===0){
+            //if no books added yet
+            res.render('homepage',{hname:person.name, flag:true, flag2:false, bookPosts:[]});
+
+          }
+          else{
+            //if books added already
+            res.render('homepage',{hname:person.name, flag:false, flag2:true, bookPosts:books});
+          }
+        }
+      });
+    }
+  });
+});
+
 app.post("/add",function(req,res){
   res.render('addbook');
 });
 
 app.post("/added", function(req,res){
+  const book=new Book({
+    bookname: req.body.bookname,
+    author:req.body.authname,
+    chapters: req.body.chapno,
+    username: usname
+  });
+  book.save();
+  res.redirect("/homepage");
+});
 
+app.post("/logout", function(req,res){
+  res.redirect("/");
 });
 
 app.listen(3000, function() {

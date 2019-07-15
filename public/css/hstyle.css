@@ -35,3 +35,33 @@ p{
 .topone{
   margin-top: 40px;
 }
+
+.bookdeats{
+  margin: 20px 35% 20px 5%;
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #5588a3;
+}
+
+h2{
+  font-family: 'Rubik', sans-serif;
+  font-size: 2rem;
+}
+
+h3{
+  font-family: 'Lora', serif;
+  font-size: 1.2rem;
+}
+
+.notebutton{
+  position: absolute;
+  right: 20px;
+  top: 30%;
+}
+
+.addmore{
+  position: absolute;
+  right: 10%;
+  top: 30%;
+}
