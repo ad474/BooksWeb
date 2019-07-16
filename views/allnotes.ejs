@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+<h1><%=bookname%></h1>
+<div class="allrev">
+  <%reviews.forEach(function(review){%>
+    <h2>Chapter <%=review.chapterno%></h2>
+    <h3><%=review.thoughts%></h3>
+    <br>
+  <%});%>
+</div>
+<div class="" style="text-align:center;margin-top:10px;">
+  <form class="" action="/ex" method="post">
+    <button type="submit" class="btn btn-warning">Go back to homepage</button>
+  </form>
+</div>
+
+
+<%- include('partials/footer') %>

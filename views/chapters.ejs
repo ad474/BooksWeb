@@ -3,6 +3,9 @@
   <h1><%=bookName%></h1>
   <h4>Written by <%=authName%></h4>
   <div class="ca">
+    <form class="" action="/allnotes" method="post">
+      <button type="submit" class="btn btn-warning allbutton" name="bookname" value="<%=bookName%>">Compile all notes</button>
+    </form>
     <%for(var i=1;i<=chapNo;i++){%>
         <form class="" action="/notes" method="post">
           <button class= "abutton" type="submit" name="chapno" value="<%=i%>">Chapter <%=i%> </button>

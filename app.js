@@ -208,6 +208,26 @@ app.post("/reviewsubmitt",function(req,res){
   });
 });
 
+app.post("/allnotes",function(req,res){
+  Review.find({username:usname, bookname:req.body.bookname}).sort({ chapterno : 'ascending'}).exec(function(err, result){
+    if(err){
+      console.log(result);
+    }
+    else{
+      if(result.length===0){
+        res.render("norev",{bookname:req.body.bookname});
+      }
+      else{
+        res.render("allnotes",{bookname:req.body.bookname,reviews:result});
+      }
+    }
+  });
+});
+
+app.post("/ex", function(req,res){
+  res.redirect("/homepage");
+});
+
 app.post("/logout", function(req,res){
   res.redirect("/");
 });

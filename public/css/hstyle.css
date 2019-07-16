@@ -13,7 +13,7 @@ h4{
   margin-top: 10px;
   font-family: 'Raleway', sans-serif;
   font-size: 2rem;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 p{
@@ -109,5 +109,20 @@ hr{
   width: 100%;
   text-align: left;
   margin-top: 40px;
+}
 
+.allbutton{
+    width: 306px;
+    height: 45px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.allrev{
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 20px 20px;
+  border-style: solid;
+  border-width: medium;
 }
