@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<h1>Leave your notes</h1>
+<%if(flag1){%>
+  <div class="reviewform">
+    <h5 class="rh5">Enter your thoughts for chapter <%=chapno%> of <%=bookname%></h5>
+    <form class="" action="/reviewsubmit" method="post">
+      <textarea class="form-control rta" id="exampleFormControlTextarea1" rows="4" name="review"></textarea>
+      <button type="submit" class="btn btn-dark btn-lg" name="chapno" value="<%=chapno%>">Submit</button>
+      <input type="hidden" name="bookname" value="<%=bookname%>">
+    </form>
+  </div>
+<%}%>
+<%if(flag2){%>
+  <div class="reviewform">
+    <h5 class="rh5">Enter your thoughts for chapter <%=chapno%> of <%=bookname%></h5>
+    <form class="" action="/reviewsubmitt" method="post">
+      <textarea class="form-control rta" id="exampleFormControlTextarea1" rows="4" name="review"><%=review.thoughts%></textarea>
+      <button type="submit" class="btn btn-dark btn-lg" name="chapno" value="<%=chapno%>">Submit</button>
+      <input type="hidden" name="bookname" value="<%=bookname%>">
+    </form>
+  </div>
+<%}%>
+
+<%- include('partials/footer') %>

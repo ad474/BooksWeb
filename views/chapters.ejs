@@ -4,7 +4,10 @@
   <h4>Written by <%=authName%></h4>
   <div class="ca">
     <%for(var i=1;i<=chapNo;i++){%>
-      <a href="#">Chapter <%=i%> </a>
+        <form class="" action="/notes" method="post">
+          <button class= "abutton" type="submit" name="chapno" value="<%=i%>">Chapter <%=i%> </button>
+          <input type="hidden" name="bookname" value="<%=bookName%>">
+        </form>
       <hr>
     <%}%>
   </div>

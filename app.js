@@ -137,14 +137,73 @@ app.post("/added", function(req,res){
   res.redirect("/homepage");
 });
 
-app.post("/notes", function(req, res){
+app.post("/chapters", function(req, res){
   Book.findOne({username:usname, bookname:req.body.button}, function(err,fbook){
     if(err){
       console.log(err);
     }
     else{
-      //fbook.chapters
       res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters});
+    }
+  });
+});
+
+
+app.post("/notes", function(req,res){
+  Review.find({username:usname, bookname:req.body.bookname, chapterno: req.body.chapno}, function(err,rev){
+    if(err){
+      console.log(err);
+    }
+    else{
+      if(rev.length===0){
+        res.render("review",{flag1:true, flag2:false, review:[],chapno:req.body.chapno,bookname:req.body.bookname});
+      }
+      else{
+        res.render("review",{flag1:false, flag2:true, review:rev[0],chapno:req.body.chapno,bookname:req.body.bookname});
+      }
+    }
+  });
+});
+
+app.post("/reviewsubmit",function(req,res){
+  //req.body.review
+  //req.body.chapno
+  //req.body.bookname
+  const review= new Review({
+    username: usname,
+    bookname: req.body.bookname,
+    chapterno: req.body.chapno,
+    thoughts: req.body.review
+  });
+  review.save();
+  Book.findOne({username:usname, bookname:req.body.bookname}, function(err,fbook){
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters});
+    }
+  });
+});
+
+app.post("/reviewsubmitt",function(req,res){
+  console.log(req.body);
+  //req.body.review
+  //req.body.chapno
+  //req.body.bookname
+  Review.updateOne({username:usname,bookname:req.body.bookname,chapterno:req.body.chapno},{thoughts:req.body.review},function(err){
+    if(err){
+      console.log(err);
+    }
+    else{
+      Book.findOne({username:usname, bookname:req.body.bookname}, function(err,fbook){
+        if(err){
+          console.log(err);
+        }
+        else{
+          res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters});
+        }
+      });
     }
   });
 });
