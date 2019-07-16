@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+
+  <h1><%=bookName%></h1>
+  <h4>Written by <%=authName%></h4>
+  <div class="ca">
+    <%for(var i=1;i<=chapNo;i++){%>
+      <a href="#">Chapter <%=i%> </a>
+      <hr>
+    <%}%>
+  </div>
+
+
+<%- include('partials/footer') %>

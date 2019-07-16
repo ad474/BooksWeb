@@ -137,6 +137,18 @@ app.post("/added", function(req,res){
   res.redirect("/homepage");
 });
 
+app.post("/notes", function(req, res){
+  Book.findOne({username:usname, bookname:req.body.button}, function(err,fbook){
+    if(err){
+      console.log(err);
+    }
+    else{
+      //fbook.chapters
+      res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters});
+    }
+  });
+});
+
 app.post("/logout", function(req,res){
   res.redirect("/");
 });
