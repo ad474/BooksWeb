@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+
+  <h1>Edit the details</h1>
+  <div class="cbutton">
+    <form class="" action="/edited" method="post">
+      <input class="form-control topone" type="text" value="<%=bookname%>" name="bookname">
+      <input class="form-control" type="text" value="<%=authname%>" name="authname">
+      <input class="form-control" type="text" value="<%=chapno%>" name="chapno">
+      <button type="submit" class="btn btn-primary obutton" name="id" value="<%=id%>">Edit</button>
+    </form>
+  </div>
+
+<%- include('partials/footer') %>

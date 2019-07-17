@@ -13,7 +13,7 @@
   <%if(flag2){%>
     <div class="addedbooks">
       <form class="" action="/add" method="post">
-        <button type="submit" class="btn btn-warning btn-lg addmore"><i class="fas fa-book"></i>           Add a book</button>
+        <button type="submit" class="btn btn-secondary btn-lg addmore"><i class="fas fa-book"></i>   Add a book</button>
       </form>
       <%bookPosts.forEach(function(book){%>
         <div class="bookdeats">
@@ -21,6 +21,12 @@
           <h3>Author: <%=book.author%></h3>
           <form class="" action="/chapters" method="post">
             <button type="submit" name="button" value="<%=book.bookname%>" class="btn btn-dark notebutton">Take notes</button>
+          </form>
+          <form class="" action="/edit" method="post">
+            <button type="submit" name="id" value="<%=book._id%>" class="btn btn-warning notebuttone"><i class="fas fa-edit"></i></button>
+          </form>
+          <form class="" action="/delete" method="post">
+            <button type="submit" name="id" value="<%=book._id%>" class="btn btn-danger notebuttond"><i class="fas fa-trash-alt"></i></i></button>
           </form>
         </div>
       <%});%>

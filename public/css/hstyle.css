@@ -64,7 +64,21 @@ h3{
 .notebutton{
   position: absolute;
   right: 20px;
-  top: 30%;
+  top: 10%;
+}
+
+.notebuttone{
+  position: absolute;
+  right: 80px;
+  top: 55%;
+  padding: 4px 6px;
+}
+
+.notebuttond{
+  position: absolute;
+  right: 30px;
+  top: 55%;
+  padding: 4px 10px;
 }
 
 .addmore{

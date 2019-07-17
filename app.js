@@ -145,6 +145,39 @@ app.post("/added", function(req,res){
   res.redirect("/homepage");
 });
 
+app.post("/edit",function(req,res){
+  Book.findOne({_id:req.body.id},function(err,result){
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.render('edit',{bookname:result.bookname,authname:result.author,chapno:result.chapters ,id:result._id});
+    }
+  });
+});
+
+app.post("/edited", function(req,res){
+  Book.updateOne({_id: req.body.id}, {bookname:req.body.bookname ,author:req.body.authname ,chapters:req.body.chapno}, function(err){
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.redirect("/homepage");
+    }
+  });
+});
+
+app.post("/delete", function(req,res){
+  Book.deleteOne({_id: req.body.id}, function(err){
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.redirect("/homepage");
+    }
+  });
+});
+
 app.post("/chapters", function(req, res){
   Book.findOne({username:usname, bookname:req.body.button}, function(err,fbook){
     if(err){
