@@ -256,7 +256,7 @@ app.post("/reviewsubmitt",function(req,res){
           console.log(err);
         }
         else{
-          res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters});
+          res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id});
         }
       });
     }

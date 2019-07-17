@@ -5,7 +5,7 @@
   <div class="reviewform">
     <h5 class="rh5">Enter your thoughts for chapter <%=chapno%> of <%=bookname%></h5>
     <form class="" action="/reviewsubmit" method="post">
-      <textarea class="form-control rta" id="exampleFormControlTextarea1" rows="4" name="review"></textarea>
+      <textarea class="form-control rta" id="exampleFormControlTextarea1" rows="4" name="review" required></textarea>
       <button type="submit" class="btn btn-dark btn-lg" name="chapno" value="<%=chapno%>">Submit</button>
       <input type="hidden" name="bookname" value="<%=bookname%>">
       <input type="hidden" name="bookid" value="<%=bookid%>">
