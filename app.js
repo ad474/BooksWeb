@@ -63,7 +63,7 @@ app.post("/register",function(req,res){
     else{
       if(persons.length===0){
         person.save();
-        res.render('index', {filler: "Login with your credentials now!"});
+        res.render('login', {filler: "Login with your credentials now!"});
       }
       else{
         res.render('register', {filler: "Username taken. Please try again."});
@@ -80,7 +80,7 @@ app.post("/account", function(req,res){
     else{
       if(person===null){
         //wrong username
-        res.render('index', {filler: "This user does not exist. Try again."});
+        res.render('login', {filler: "Username/password incorrect. Try again."});
       }
       else{
         if(person.password===req.body.password){
@@ -89,7 +89,7 @@ app.post("/account", function(req,res){
           res.redirect("/homepage");
         }
         else{
-          res.render('index', {filler: "This user does not exist. Try again. Password problem"});
+          res.render('login', {filler: "Username/password incorrect. Try again."});
         }
       }
     }
@@ -120,6 +120,14 @@ app.get("/homepage", function(req,res){
       });
     }
   });
+});
+
+app.post("/login", function(req,res){
+  res.redirect("/login");
+});
+
+app.get("/login", function(req,res){
+  res.render("login", {filler:""});
 });
 
 app.post("/add",function(req,res){
