@@ -140,3 +140,7 @@ hr{
   border-style: solid;
   border-width: medium;
 }
+
+.blahform {
+    display: inline;
+}

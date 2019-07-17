@@ -35,7 +35,8 @@ const reviewSchema= new mongoose.Schema({
   username: String,
   bookname: String,
   chapterno: Number, //wary about you
-  thoughts: String
+  thoughts: String,
+  bookID: String
 });
 
 const Review= mongoose.model("Review", reviewSchema);
@@ -110,7 +111,6 @@ app.get("/homepage", function(req,res){
           if(books.length===0){
             //if no books added yet
             res.render('homepage',{hname:person.name, flag:true, flag2:false, bookPosts:[]});
-
           }
           else{
             //if books added already
@@ -162,6 +162,11 @@ app.post("/edited", function(req,res){
       console.log(err);
     }
     else{
+      Review.updateMany({bookID:req.body.id}, {bookname:req.body.bookname},function(err){
+        if(err){
+          console.log(err);
+        }
+      });
       res.redirect("/homepage");
     }
   });
@@ -173,7 +178,14 @@ app.post("/delete", function(req,res){
       console.log(err);
     }
     else{
-      res.redirect("/homepage");
+      Review.deleteMany({bookID: req.body.id}, function(err){
+        if(err){
+          console.log(err);
+        }
+        else{
+          res.redirect("/homepage");
+        }
+      });
     }
   });
 });
@@ -184,11 +196,15 @@ app.post("/chapters", function(req, res){
       console.log(err);
     }
     else{
-      res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters});
+      console.log("bookid is "+fbook._id);
+      res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id});
     }
   });
 });
 
+app.post("/bthp", function(req,res){
+  res.redirect("/homepage");
+});
 
 app.post("/notes", function(req,res){
   Review.find({username:usname, bookname:req.body.bookname, chapterno: req.body.chapno}, function(err,rev){
@@ -197,24 +213,22 @@ app.post("/notes", function(req,res){
     }
     else{
       if(rev.length===0){
-        res.render("review",{flag1:true, flag2:false, review:[],chapno:req.body.chapno,bookname:req.body.bookname});
+        res.render("review",{flag1:true, flag2:false, review:[],chapno:req.body.chapno,bookname:req.body.bookname,bookid:req.body.bookid});
       }
       else{
-        res.render("review",{flag1:false, flag2:true, review:rev[0],chapno:req.body.chapno,bookname:req.body.bookname});
+        res.render("review",{flag1:false, flag2:true, review:rev[0],chapno:req.body.chapno,bookname:req.body.bookname,bookid:req.body.bookid});
       }
     }
   });
 });
 
 app.post("/reviewsubmit",function(req,res){
-  //req.body.review
-  //req.body.chapno
-  //req.body.bookname
   const review= new Review({
     username: usname,
     bookname: req.body.bookname,
     chapterno: req.body.chapno,
-    thoughts: req.body.review
+    thoughts: req.body.review,
+    bookID: req.body.bookid
   });
   review.save();
   Book.findOne({username:usname, bookname:req.body.bookname}, function(err,fbook){
@@ -222,7 +236,7 @@ app.post("/reviewsubmit",function(req,res){
       console.log(err);
     }
     else{
-      res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters});
+      res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id});
     }
   });
 });
