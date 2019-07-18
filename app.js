@@ -4,7 +4,7 @@ require('dotenv').config();
 const express= require("express");
 const bodyParser= require("body-parser");
 const mongoose= require("mongoose");
-const encrypt = require('mongoose-encryption');
+const encrypt = require("mongoose-encryption");
 
 const app=express();
 app.set('view engine', 'ejs');
@@ -19,6 +19,8 @@ const personSchema=new mongoose.Schema({
   password: String,
   name: String
 });
+
+personSchema.plugin(encrypt, {secret: process.env.SECRET, encryptedFields: ['password']});
 
 const Person= mongoose.model("Person",personSchema);
 
@@ -196,7 +198,6 @@ app.post("/chapters", function(req, res){
       console.log(err);
     }
     else{
-      console.log("bookid is "+fbook._id);
       res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id});
     }
   });
@@ -242,7 +243,6 @@ app.post("/reviewsubmit",function(req,res){
 });
 
 app.post("/reviewsubmitt",function(req,res){
-  console.log(req.body);
   //req.body.review
   //req.body.chapno
   //req.body.bookname
@@ -266,7 +266,7 @@ app.post("/reviewsubmitt",function(req,res){
 app.post("/allnotes",function(req,res){
   Review.find({username:usname, bookname:req.body.bookname}).sort({ chapterno : 'ascending'}).exec(function(err, result){
     if(err){
-      console.log(result);
+      console.log(err);
     }
     else{
       if(result.length===0){
