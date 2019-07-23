@@ -52,8 +52,13 @@ p{
 }
 
 h2{
+  display:table;
   font-family: 'Rubik', sans-serif;
   font-size: 2rem;
+}
+
+.sform{
+  display: inline-block;
 }
 
 h3{
@@ -104,6 +109,21 @@ hr{
      color:#069;
      text-decoration:underline;
      cursor:pointer;
+}
+
+.abutton2{
+  background:none;
+     border:none;
+     padding:0;
+     color:purple;
+     text-decoration:underline;
+     cursor:pointer;
+}
+
+.tbutton{
+  background:none;
+     border:none;
+     padding:0;
 }
 
 .reviewform{

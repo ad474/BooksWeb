@@ -198,7 +198,34 @@ app.post("/chapters", function(req, res){
       console.log(err);
     }
     else{
-      res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id});
+      var ch=[];
+      var tosend=[];
+      Review.find({bookID:fbook._id},function(err,result){
+        if(err){
+          console.log(err);
+        }
+        else{
+          result.forEach(function(r){
+            ch.push(r.chapterno);
+          });
+          for (var i = 1; i <= fbook.chapters ; i++) {
+            if(ch.indexOf(i)==-1){
+              tosend.push({
+                chapternum:i,
+                flag:false
+              });
+            }
+            else{
+              tosend.push({
+                chapternum:i,
+                flag:true
+              });
+            }
+          }
+          console.log(tosend);
+          res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id,tosend:tosend});
+        }
+      });
     }
   });
 });
@@ -237,7 +264,34 @@ app.post("/reviewsubmit",function(req,res){
       console.log(err);
     }
     else{
-      res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id});
+      var ch=[];
+      var tosend=[];
+      Review.find({bookID:fbook._id},function(err,result){
+        if(err){
+          console.log(err);
+        }
+        else{
+          result.forEach(function(r){
+            ch.push(r.chapterno);
+          });
+          for (var i = 1; i <= fbook.chapters ; i++) {
+            if(ch.indexOf(i)==-1){
+              tosend.push({
+                chapternum:i,
+                flag:false
+              });
+            }
+            else{
+              tosend.push({
+                chapternum:i,
+                flag:true
+              });
+            }
+          }
+          console.log(tosend);
+          res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id,tosend:tosend});
+        }
+      });
     }
   });
 });
@@ -256,7 +310,35 @@ app.post("/reviewsubmitt",function(req,res){
           console.log(err);
         }
         else{
-          res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id});
+          var ch=[];
+          var tosend=[];
+          Review.find({bookID:fbook._id},function(err,result){
+            if(err){
+              console.log(err);
+            }
+            else{
+              result.forEach(function(r){
+                ch.push(r.chapterno);
+              });
+              for (var i = 1; i <= fbook.chapters ; i++) {
+                if(ch.indexOf(i)==-1){
+                  tosend.push({
+                    chapternum:i,
+                    flag:false
+                  });
+                }
+                else{
+                  tosend.push({
+                    chapternum:i,
+                    flag:true
+                  });
+                }
+              }
+              console.log(tosend);
+              res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id,tosend:tosend});
+            }
+          });
+          //res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id});
         }
       });
     }
@@ -275,6 +357,18 @@ app.post("/allnotes",function(req,res){
       else{
         res.render("allnotes",{bookname:req.body.bookname,reviews:result});
       }
+    }
+  });
+});
+
+app.post("/deleterev",function(req,res){
+  console.log(req.body);
+  Review.deleteOne({_id:req.body.button},function(err){
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.redirect("/homepage");
     }
   });
 });

@@ -11,7 +11,12 @@
     </form>
     <%for(var i=1;i<=chapNo;i++){%>
         <form class="" action="/notes" method="post">
-          <button class= "abutton" type="submit" name="chapno" value="<%=i%>">Chapter <%=i%> </button>
+          <%if(tosend[i-1].flag===false){%>
+            <button class= "abutton" type="submit" name="chapno" value="<%=i%>">Chapter <%=i%> </button>
+          <%}%>
+          <%if(tosend[i-1].flag===true){%>
+            <button class= "abutton2" type="submit" name="chapno" value="<%=i%>">Chapter <%=i%> </button>
+          <%}%>
           <input type="hidden" name="bookname" value="<%=bookName%>">
           <input type="hidden" name="bookid" value="<%=bookid%>">
         </form>

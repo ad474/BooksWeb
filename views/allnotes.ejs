@@ -3,7 +3,11 @@
 <h1><%=bookname%></h1>
 <div class="allrev">
   <%reviews.forEach(function(review){%>
-    <h2>Chapter <%=review.chapterno%></h2>
+    <h2>Chapter <%=review.chapterno%> <form class="sform" action="/deleterev" method="post">
+      <button type="submit" class="tbutton" name="button" value="<%=review._id%>"><i class="fas fa-trash-alt">  </i></button></h2>
+    </form>
+
+
     <h3><%=review.thoughts%></h3>
     <br>
   <%});%>
