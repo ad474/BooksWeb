@@ -5,6 +5,7 @@ const express= require("express");
 const bodyParser= require("body-parser");
 const mongoose= require("mongoose");
 const encrypt = require("mongoose-encryption");
+const nodemailer= require("nodemailer");
 
 const app=express();
 app.set('view engine', 'ejs');
@@ -17,7 +18,8 @@ mongoose.connect("mongodb://localhost:27017/bookDB", { useNewUrlParser: true });
 const personSchema=new mongoose.Schema({
   username:String,
   password: String,
-  name: String
+  name: String,
+  email:String
 });
 
 personSchema.plugin(encrypt, {secret: process.env.SECRET, encryptedFields: ['password']});
@@ -57,7 +59,8 @@ app.post("/register",function(req,res){
   const person=new Person({
     username: req.body.username,
     password: req.body.password,
-    name: req.body.name
+    name: req.body.name,
+    email: req.body.email
   });
   Person.find({username:req.body.username},function(err,persons){
     if(err){
@@ -132,6 +135,113 @@ app.get("/login", function(req,res){
   res.render("login", {filler:""});
 });
 
+app.get("/resetpass",function(req,res){
+  res.render("resetpass", {filler:""});
+});
+
+var rand;
+
+app.post("/resetpass",function(req,res){
+  Person.find({email:req.body.email},function(err,per){
+    if(err){
+      console.log(err);
+    }
+    else{
+      if(per.length===0){
+        res.render("resetpass", {filler:"Email does not match any account"});
+      }
+      else{
+        let transporter= nodemailer.createTransport({
+          service: 'gmail',
+          secure: false,
+          post:25,
+          auth:{
+            user:'ankitad0219@gmail.com',
+            pass:process.env.PASS
+          },
+          tls:{
+            rejectUnauthorized: false
+          }
+        });
+        rand= Math.floor(Math.random() * 89999)+10000;
+        var toSend="Hey "+per[0].name+"! OTP for the reset of your password is "+rand+". Have a nice day!";
+        let helperOptions= {
+          from: '"Ankita Durgavajula" <ankitad0219@gmail.com',
+          to:req.body.email,
+          subject: 'Password reset for BookTab',
+          text: toSend
+        };
+        transporter.sendMail(helperOptions, function(err,info){
+          if(err){
+            res.send(err);
+          }
+          else{
+            res.render("otp",{filler:"",otp:rand,id:per[0]._id});
+            //render the OTP page and send OTP and id
+          }
+        });
+      }
+    }
+  });
+});
+
+app.post("/otp",function(req,res){
+  if(req.body.otp==req.body.orotp){
+      res.render("password",{id:req.body.id});
+  }
+  else{
+    Person.findOne({_id:req.body.id},function(err,resu){
+      if(err){
+        console.log(err);
+      }
+      else{
+        res.render("otp",{filler:"Wrong OTP entered",otp:rand,id:resu._id});
+      }
+    });
+    //wrong otp
+  }
+});
+
+app.post("/resetdone",function(req,res){
+  Person.updateOne({_id:req.body.id},{password:req.body.password},function(err){
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.render("login", {filler:"Password is reset"});
+    }
+  });
+});
+
+// app.get("/resetpass", function(req,res){
+//   let transporter= nodemailer.createTransport({
+//     service: 'gmail',
+//     secure: false,
+//     post:25,
+//     auth:{
+//       user:'ankitad0219@gmai.com',
+//       pass:process.env.PASS
+//     },
+//     tls:{
+//       rejectUnauthorized: false
+//     }
+//   });
+//   let helperOptions= {
+//     from: '"Ankita Durgavajula" <ankitad0219@gmail.com',
+//     to:'anki.manic@gmail.com',
+//     subject: 'Hello World',
+//     text: 'Hello from the other side'
+//   };
+//   transporter.sendMail(helperOptions, function(err,info){
+//     if(err){
+//       res.send(err);
+//     }
+//     else{
+//       res.send("Success");
+//     }
+//   });
+// });
+
 app.post("/add",function(req,res){
   res.render('addbook');
 });
@@ -159,6 +269,19 @@ app.post("/edit",function(req,res){
 });
 
 app.post("/edited", function(req,res){
+  Review.find({chapterno:{$gte: req.body.chapno}},function(err,resu){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log(resu);
+    }
+  });
+  Review.deleteMany({chapterno:{$gte: req.body.chapno}},function(err){
+    if(err){
+      console.log(err);
+    }
+  });
   Book.updateOne({_id: req.body.id}, {bookname:req.body.bookname ,author:req.body.authname ,chapters:req.body.chapno}, function(err){
     if(err){
       console.log(err);
@@ -222,7 +345,6 @@ app.post("/chapters", function(req, res){
               });
             }
           }
-          console.log(tosend);
           res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id,tosend:tosend});
         }
       });
@@ -288,7 +410,6 @@ app.post("/reviewsubmit",function(req,res){
               });
             }
           }
-          console.log(tosend);
           res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id,tosend:tosend});
         }
       });
@@ -334,7 +455,6 @@ app.post("/reviewsubmitt",function(req,res){
                   });
                 }
               }
-              console.log(tosend);
               res.render('chapters',{bookName:fbook.bookname, authName:fbook.author, chapNo:fbook.chapters, bookid:fbook._id,tosend:tosend});
             }
           });
@@ -362,7 +482,6 @@ app.post("/allnotes",function(req,res){
 });
 
 app.post("/deleterev",function(req,res){
-  console.log(req.body);
   Review.deleteOne({_id:req.body.button},function(err){
     if(err){
       console.log(err);

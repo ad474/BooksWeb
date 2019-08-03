@@ -45,6 +45,12 @@ h2{
   padding: 18px;
 }
 
+.loginblack22{
+  position: absolute; top: 0; left: 0; height: 100%; width: 100%;
+  background-color: black;
+  padding: 40px;
+}
+
 .loginblack2{
   background-color: black;
   padding: 40px;
@@ -64,7 +70,7 @@ h2{
 .h1class{
   font-family: 'Raleway', sans-serif;
   color: white;
-  padding-top: 150px;
+  padding-top: 115px;
   font-size: 50px;
 }
 

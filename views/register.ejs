@@ -13,19 +13,22 @@
         <div class="login">
           <h1 class="h1class">Register here</h1>
           <br>
-          <div class="loginform">
+          <div class="loginform"  style="padding-bottom: 100px;">
             <div class="errorbox">
               <p class="errorp"><%= filler%></p>
             </div>
             <form method="post" action="/register">
               <div class="form-group">
-                <input class="form-control" type="text" placeholder="Enter username" name="username">
+                <input class="form-control" type="text" placeholder="Username" name="username">
               </div>
               <div class="form-group">
                 <input class="form-control" type="text" placeholder="Name" name="name">
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password" name="password">
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" name="email">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
               </div>
               <br>
               <button type="submit" class="btn btn-outline-light">Register now</button>

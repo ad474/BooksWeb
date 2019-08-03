@@ -26,11 +26,17 @@
             <button type="submit" name="id" value="<%=book._id%>" class="btn btn-warning notebuttone"><i class="fas fa-edit"></i></button>
           </form>
           <form class="" action="/delete" method="post">
-            <button type="submit" name="id" value="<%=book._id%>" class="btn btn-danger notebuttond"><i class="fas fa-trash-alt"></i></i></button>
+            <button type="submit" onclick="clicked(event)" name="id" value="<%=book._id%>" class="btn btn-danger notebuttond"><i class="fas fa-trash-alt"></i></i></button>
           </form>
         </div>
       <%});%>
     </div>
   <%}%>
+  <script>
+function clicked(e)
+{
+  if(!confirm('Are you sure you want to delete this book?'))e.preventDefault();
+}
+</script>
 
 <%- include('partials/footer') %>

@@ -4,8 +4,8 @@
 <div class="allrev">
   <%reviews.forEach(function(review){%>
     <h2>Chapter <%=review.chapterno%> <form class="sform" action="/deleterev" method="post">
-      <button type="submit" class="tbutton" name="button" value="<%=review._id%>"><i class="fas fa-trash-alt">  </i></button></h2>
-    </form>
+      <button type="submit" onclick="clicked(event)"class="tbutton" name="button" value="<%=review._id%>"><i class="fas fa-trash-alt">  </i></button></form></h2>
+
 
 
     <h3><%=review.thoughts%></h3>
@@ -18,5 +18,11 @@
   </form>
 </div>
 
+<script>
+function clicked(e)
+{
+if(!confirm('Are you sure you want to delete this note?'))e.preventDefault();
+}
+</script>
 
 <%- include('partials/footer') %>
