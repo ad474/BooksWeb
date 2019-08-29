@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/bookDB", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://admin-ankita:test321@cluster0-fqu0x.mongodb.net/bookDB", { useNewUrlParser: true });
 
 const personSchema=new mongoose.Schema({
   username:String,
